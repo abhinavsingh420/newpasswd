@@ -39,7 +39,7 @@ def first_run():
         os.mkdir(PROJECT_FOLDER)
     
     if not os.path.isfile(os.path.join(PROJECT_FOLDER, 'wordlist.txt')):
-        with urllib.request.urlopen('https://raw.githubusercontent.com/madsaune/newpasswd/master/wordlist.txt') as response:
+        with urllib.request.urlopen('https://raw.githubusercontent.com/madsaune/newpasswd/master/data/wordlist.txt') as response:
             with open(os.path.join(PROJECT_FOLDER, 'wordlist.txt'), 'wb') as destination:
                 shutil.copyfileobj(response, destination)
 
