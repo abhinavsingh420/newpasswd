@@ -22,7 +22,12 @@ DELIMITER = "-"
 PROJECT_FOLDER = os.path.expanduser('~/.newpasswd')
 
 def usage():
-    print("Usage: newpasswd [-OPTIONS]")
+    print("Usage: newpasswd [-FLAGS] [-c COUNT] [-n NUMOFWORDS] [-b DELIMITER]")
+    print("")
+    print("Generates either a string of random characters or words with optional 4 digits as prefix/suffix.")
+    print("")
+    print("arguments:")
+    print("\t-h, --help\t\t Show this help message")
     print("\t-u, --uppercase\t\t Include UPPERCASE characters (A-Z)")
     print("\t-l, --lowercase\t\t Include lowercase characters (a-z)")
     print("\t-d, --digits\t\t Include digits (0-9)")
@@ -32,7 +37,16 @@ def usage():
     print("\t-w, --word\t\t Generate sentence (without, a random string will be generated)")
     print("\t-c, --count <num>\t How many passwords to generate")
     print("\t-n, --numOfWords <num>\t How mange words to include. Only works with -w")
-    print("\t-b, --between, --delimiter <char>\t A character to seperate words")
+    print("\t-z, --size <num>\t\t How many characters to include. Only works without -w")
+    print("\t-b, --between <char>\t Character(s) to seperate words. Only works with -w")
+    print("\t    --delimiter <char>")
+    print("")
+    print("examples:")
+    print("\tGenerate a string of 2 random words with delimiter and suffix.")
+    print("\t\t$ newpasswd -wx")
+    print("")
+    print("\tGenerate a string of 12 random characters, containing uppercase, lowercase, digits and symbols.")
+    print("\t\tnewpasswd -uldsz12")
 
 def first_run():
     if not os.path.exists(PROJECT_FOLDER):
@@ -48,7 +62,7 @@ def first_run():
 first_run()
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "huldspxwc:n:b:", ['help', 'uppercase', 'lowercase', 'digits', 'symbols', 'prefix', 'suffix', 'word', 'count=', 'numOfWords=', 'between=', 'delimiter='])
+    opts, args = getopt.getopt(sys.argv[1:], "huldspxwc:n:z:b:", ['help', 'uppercase', 'lowercase', 'digits', 'symbols', 'prefix', 'suffix', 'word', 'count=', 'numOfWords=', 'size=', 'between=', 'delimiter='])
     
     if len(opts) < 1:
         usage()
@@ -76,6 +90,8 @@ try:
             COUNT = int(arg)
         elif opt in ('-n', '--numOfWords'):
             NUMOFWORDS = int(arg)
+        elif opt in ('-z', '--size'):
+            STR_LENGTH = int(arg)
         elif opt in ('-b', '--between', '--delimiter'):
             DELIMITER = arg
         else:
