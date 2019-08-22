@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from random import randint, shuffle
 import getopt
@@ -20,6 +20,7 @@ SUFFIX = False
 WORD = False
 DELIMITER = "-"
 PROJECT_FOLDER = os.path.expanduser('~/.newpasswd')
+WORDFILE_URL = "https://raw.githubusercontent.com/madsaune/newpasswd/master/data/wordlist.txt"
 
 def usage():
     print("Usage: newpasswd [-FLAGS] [-c COUNT] [-n NUMOFWORDS] [-b DELIMITER]")
@@ -53,7 +54,7 @@ def first_run():
         os.mkdir(PROJECT_FOLDER)
     
     if not os.path.isfile(os.path.join(PROJECT_FOLDER, 'wordlist.txt')):
-        with urllib.request.urlopen('https://raw.githubusercontent.com/madsaune/newpasswd/master/data/wordlist.txt') as response:
+        with urllib.request.urlopen(WORDFILE_URL) as response:
             with open(os.path.join(PROJECT_FOLDER, 'wordlist.txt'), 'wb') as destination:
                 shutil.copyfileobj(response, destination)
 
